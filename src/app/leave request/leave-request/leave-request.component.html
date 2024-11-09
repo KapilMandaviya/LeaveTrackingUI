@@ -1,0 +1,103 @@
+<div class="my-container mx-auto  w-100" >
+  <div class="outer">
+      <div class="container" >
+          <div class="row mt-5">
+          <div class="col-md-6 " style="width: 40%;" >
+                  <div class="panel border " >
+                      <div class="panel-heading">
+                          <h3 class="pt-2 m-1 my-rounded-corner text-center bg-dark text-white" >Create Leave Request</h3>
+                      </div>
+                      <div class="panel-body p-3">
+
+                    <form [formGroup]="leaveRequestForm" (ngSubmit)="LeaveRequest()">
+                      <!-- 2 column grid layout with text inputs for the first and last names -->
+                      <div class="row mb-2">
+                        <div class="col">
+                          
+                              <div class="mb-1 form-outline">
+                                <label for="LeaveType" class="form-label">Leave Type</label>
+                                <select class="form-select" id="selectLeaveType" required formControlName="selectLeaveType">
+                                  <option selected disabled value="">Choose LeaveType...</option>
+                                  <option value="PL">Privilege Leave</option>
+                                  <option value="EL">Earned Leave</option>
+                                  <option value="AL">Annual Leave</option>
+                                  <option value="SL">Sick Leave</option>
+                                  
+                                </select>
+                                <div class="invalid-feedback">
+                                  Please select a valid Leave.
+                                </div>
+                              </div>
+                                  </div>
+                            </div>
+
+                      <!-- Text input -->
+                      <div data-mdb-input-init class="form-outline mb-2">
+                        <input type="date" id="leaveStartDate" class="form-control" formControlName="leaveStartDate" />
+                        <label class="form-label" for="leaveStartDate">Start Date</label>
+                      </div>
+
+                      <!-- Text input -->
+                      <div data-mdb-input-init class="form-outline mb-2">
+                        <input type="date" id="leaveEndDate" class="form-control" formControlName="leaveEndDate" />
+                        <label class="form-label" for="leaveEndDate">Leave End Date</label>
+                      </div>
+
+                      
+
+                      <!-- Message input -->
+                      <div data-mdb-input-init class="form-outline mb-2">
+                        <textarea class="form-control" id="leaveReason" rows="3" formControlName="leaveReason"></textarea>
+                        <label class="form-label" for="leaveReason">Reason For Leave</label>
+                      </div>
+
+                      <!-- Submit button -->
+                      <button data-mdb-ripple-init type="submit" class="btn btn-primary btn-block mb-4">Leave Request</button>
+
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+  
+
+  <div class="container">
+    <h1 class="text-align-center">My Leave List </h1>
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Leave Type</th>
+              <th scope="col">Start Date</th>
+              <th scope="col">End Date</th>
+              <th scope="col">Date Of Request</th>
+              <th scope="col">Reason For Leave</th>
+              <th scope="col">Status</th>
+              <th scope="col">count</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let LeaveStatusListByUser of leaveStatusListByUser">
+                <td>{{LeaveStatusListByUser.leaveType}}</td>
+                <td>{{LeaveStatusListByUser.startDate| date: 'MM/dd/yyyy' }} </td>
+                <td>{{LeaveStatusListByUser.endDate| date: 'MM/dd/yyyy' }}</td>
+                <td>{{LeaveStatusListByUser.dateOfReq| date: 'MM/dd/yyyy' }}</td>
+                <td>{{LeaveStatusListByUser.leaveReason}}</td>
+                <td>{{LeaveStatusListByUser.status}}</td>
+                <td>{{calculateDateDiff(LeaveStatusListByUser.startDate)}}</td>
+
+                <td>
+                <button type="button" [disabled]="calculateDateDiff(LeaveStatusListByUser.startDate)<3 || LeaveStatusListByUser.status==='Approved'|| LeaveStatusListByUser.status==='Rejected'"  class="btn btn-danger" ><i class="far fa-trash-alt" (click)="cancelleLeave(LeaveStatusListByUser.userId,LeaveStatusListByUser.leaveId)">Cancelled</i></button>
+            </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

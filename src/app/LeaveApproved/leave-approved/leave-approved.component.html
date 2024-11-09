@@ -1,0 +1,43 @@
+
+<div class="container">
+    <h1 class="text-align-center">Leave List </h1>
+    <div class="row">
+      <div class="col-12">
+        <input type="text" placeholder="Search By Name.." (keypress)="onKeyPressEvent($event)" style="width :50%"> 
+      
+        <button class="btn btn-primary" (click)="exportToExcel()">Export to Excel</button>
+        <table class="table table-bordered" id="leaveList">
+          <thead>
+            <tr>
+              <th scope="col">Employee Name</th>
+              <th scope="col">Leave Type</th>
+              <th scope="col">Start Date</th>
+              <th scope="col">End Date</th>
+              <th scope="col">Date Of Request</th>
+              <th scope="col">Reason For Leave</th>
+              <th scope="col">Status</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let leaveList of leaveStatusList">
+                 <td>{{leaveList.name}}</td>
+
+                <td>{{leaveList.leaveType}}</td>
+                <td>{{leaveList.startDate| date: 'MM/dd/yyyy' }} </td>
+                <td>{{leaveList.endDate| date: 'MM/dd/yyyy' }}</td>
+                <td>{{leaveList.dateOfReq| date: 'MM/dd/yyyy' }}</td>
+                <td>{{leaveList.leaveReason}}</td>
+                <td>{{leaveList.status}}</td>
+
+              <td>
+                <button type="button" [disabled]="leaveList.status==='Approved'|| leaveList.status==='Rejected'"  class="btn btn-primary"><i class="far fa-eye" (click)="approvedLeave(leaveList.userId,leaveList.leaveId)">Approved</i></button>
+                <button type="button" [disabled]="leaveList.status==='Rejected'|| leaveList.status==='Approved'"  class="btn btn-danger"><i class="far fa-trash-alt" (click)="rejectedLeave(leaveList.userId,leaveList.leaveId)" >Rejected</i></button>
+            </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
